@@ -5,12 +5,15 @@ export class SudokuImpl implements Sudoku {
     private field: number[];
     private length: number = 9;
     private width: number = 9;
+    private fieldLength: number;
     private minNumber: number = 0;
     private maxNumber: number = 9;
 
     constructor(field: number[]) {
-        if(field.length != this.length*this.width) {
-            throw new Error(`field needs length of ${this.length*this.width}`);
+        this.fieldLength = this.width * this.length;
+
+        if(field.length != this.fieldLength) {
+            throw new Error(`field needs length of ${this.fieldLength}`);
         }
 
         field.forEach((value: number) => {
@@ -44,7 +47,15 @@ export class SudokuImpl implements Sudoku {
     }
 
     getNumber(index: number): number {
-        throw new Error("Method not implemented.");
+        if(index >= this.fieldLength || index < 0) {
+            throw new Error("index out of bounce");
+        }
+
+        if(!Number.isInteger(index)) {
+            throw new Error("index not an integer");
+        }
+
+        return this.field[index];
     }
 
     setNumber(index: number, value: number): void {
