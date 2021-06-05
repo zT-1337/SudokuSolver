@@ -2,9 +2,9 @@
   "name": "sudokusolver",
   "version": "1.0.0",
   "description": "Solves Sudoku hopefully fast and correct",
-  "main": "dist/index.js",
+  "main": "dist/src/index.js",
   "scripts": {
-    "start": "tsc && node dist/index.js",
+    "start": "tsc && node dist/src/index.js",
     "test": "mocha -r ts-node/register tests/**/*.test.ts"
   },
   "author": "",
