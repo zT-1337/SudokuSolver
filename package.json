@@ -4,7 +4,7 @@
   "description": "Solves Sudoku hopefully fast and correct",
   "main": "dist/index.js",
   "scripts": {
-    "start": "ts-node src/index.ts",
+    "start": "tsc && node dist/index.js",
     "test": "mocha -r ts-node/register tests/**/*.test.ts"
   },
   "author": "",
