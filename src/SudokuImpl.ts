@@ -2,6 +2,7 @@ import { Sudoku } from "./@types";
 
 export class SudokuImpl implements Sudoku {
 
+    private field: number[];
     private length: number = 9;
     private width: number = 9;
     private minNumber: number = 0;
@@ -18,10 +19,28 @@ export class SudokuImpl implements Sudoku {
             }
         });
 
+        this.field = field;
     }
 
     toString(): string {
-        throw new Error("Method not implemented.");
+        var result = "";
+
+        this.field.forEach((value: number, index: number) => {
+
+            if(value) {
+                result += value;
+            } else {
+                result += " ";
+            }
+            
+            if((index % this.width) == this.width-1) {
+                result += "\n";
+            } else {
+                result += ",";
+            }
+        });
+
+        return result;
     }
 
     getNumber(index: number): number {
