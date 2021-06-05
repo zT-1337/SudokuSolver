@@ -174,8 +174,37 @@ export class SudokuImpl implements Sudoku {
                 this.isBlockSettable(index, value);
     }
 
-    solveAndGetResult(): Sudoku {
-        throw new Error("Method not implemented.");
+    solveAndGetResult(): Sudoku | null {
+        let emptySpaceIndex = this.findEmptySpaceIndex();
+
+        if(emptySpaceIndex == -1) {
+            return this;
+        }
+
+        let possibleNumbersForEmptySpace = this.getCurrentlyPossibleNumbers(emptySpaceIndex);
+
+        for(let possibleNumber of possibleNumbersForEmptySpace) {
+            let fieldCopy = [...this.field];
+            fieldCopy[emptySpaceIndex] = possibleNumber;
+            let sudokoWithFilledEmptySpace = new SudokuImpl(fieldCopy);
+            let result = sudokoWithFilledEmptySpace.solveAndGetResult();
+
+            if(result != null) {
+                return result;
+            }
+        }
+
+        return null;
+    }
+
+    private findEmptySpaceIndex(): number {
+        for(let i = 0; i < this.fieldLength; ++i) {
+            if(this.field[i] == 0) {
+                return i;
+            }
+        }
+
+        return -1;
     }
     
 }
