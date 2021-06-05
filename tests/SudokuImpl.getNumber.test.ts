@@ -11,15 +11,15 @@ describe("SudokoImpl getNumber", function () {
     });
 
     it("should throw error because index is too big", function () {
-        expect(() => sudokoImpl.getNumber(81)).to.throw(Error, "index out of bounce");
+        expect(() => sudokoImpl.getNumber(81)).to.throw(Error, "index is out of bounce");
     });
 
     it("should throw error because index is too small", function () {
-        expect(() => sudokoImpl.getNumber(-1)).to.throw(Error, "index out of bounce");
+        expect(() => sudokoImpl.getNumber(-1)).to.throw(Error, "index is out of bounce");
     });
 
     it("should throw error because index is not an integer", function () {
-        expect(() => sudokoImpl.getNumber(1.5)).to.throw(Error, "index not an integer");
+        expect(() => sudokoImpl.getNumber(1.5)).to.throw(Error, "index is not an integer");
     });
 
     it("should return numbers successfully", function () {

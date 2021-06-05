@@ -18,14 +18,14 @@ describe("SudokuImpl constructor", function() {
     });
 
     it("should throw error, because field has numbers that are too big", function () {
-        expect(() => new SudokuImpl(createNumberArrayWithCertainNumber(81, 10))).to.throw(Error, "field can only contain integers between 0 and 9");
+        expect(() => new SudokuImpl(createNumberArrayWithCertainNumber(81, 10))).to.throw(Error, "fieldValue is out of bounce");
     });
 
     it("should throw error, because field has numbers that are too small", function () {
-        expect(() => new SudokuImpl(createNumberArrayWithCertainNumber(81, -1))).to.throw(Error, "field can only contain integers between 0 and 9");
+        expect(() => new SudokuImpl(createNumberArrayWithCertainNumber(81, -1))).to.throw(Error, "fieldValue is out of bounce");
     });
 
     it("should throw error, because field has numbers that not an integer", function () {
-        expect(() => new SudokuImpl(createNumberArrayWithCertainNumber(81, 0.5))).to.throw(Error, "field can only contain integers between 0 and 9");
+        expect(() => new SudokuImpl(createNumberArrayWithCertainNumber(81, 0.5))).to.throw(Error, "fieldValue is not an integer");
     });
 });
