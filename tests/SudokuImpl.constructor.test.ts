@@ -3,7 +3,7 @@ import { SudokuImpl } from "../src/SudokuImpl";
 import { createNumberArrayWithCertainNumber } from "./utilities/CreateArrays";
 
 
-describe("Sudoku constructor", function() {
+describe("SudokuImpl constructor", function() {
 
     it("should throw error, because field is empty", function() {
         expect(() => new SudokuImpl([])).to.throw(Error, "field needs length of 81");
