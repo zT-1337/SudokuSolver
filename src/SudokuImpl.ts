@@ -72,22 +72,32 @@ export class SudokuImpl implements Sudoku {
     }
 
     private checkIsValueSettable(index: number, value: number) {
-        this.checkIsHorizontalLineSettable(index, value);
-        this.checkIsVerticalLineSettable(index, value);
-        this.checkIsBlockSettable(index, value);
+        if(!this.isHorizontalLineSettable(index, value)) {
+            throw new Error(`${value} is already set in horizontal line`);
+        }
+
+        if(!this.isVerticalLineSettable(index, value)) {
+            throw new Error(`${value} is already set in vertical line`);
+        }
+
+        if(!this.isBlockSettable(index, value)) {
+            throw new Error(`${value} is already set in block`);
+        }
     }
 
-    private checkIsHorizontalLineSettable(index: number, value: number): void {
+    private isHorizontalLineSettable(index: number, value: number): boolean {
         let i = this.calcLeftBound(index);
         let end = i + this.width
 
         while(i < end) {
             if(value === this.field[i] && i != index) {
-                throw new Error(`${value} is already set in horizontal line`);
+                return false;
             }
 
             ++i;
         }
+
+        return true;
     }
 
     private calcLeftBound(index: number): number {
@@ -98,17 +108,19 @@ export class SudokuImpl implements Sudoku {
         return Math.floor(index / this.width);
     }
 
-    private checkIsVerticalLineSettable(index: number, value: number): void {
+    private isVerticalLineSettable(index: number, value: number): boolean {
         let i = this.calcUpperBound(index);
         let end = this.fieldLength + i;
 
         while(i < end) {
             if(value === this.field[i] && i != index) {
-                throw new Error(`${value} is already set in vertical line`);
+                return false;
             }
 
             i += this.width;
         }
+
+        return true;
     }
 
     private calcUpperBound(index: number): number {
@@ -116,7 +128,7 @@ export class SudokuImpl implements Sudoku {
         return column;
     }
 
-    private checkIsBlockSettable(index: number, value: number): void {
+    private isBlockSettable(index: number, value: number): boolean {
         let upperLeftBoundOfBlock = this.calcUpperLeftBoundOfBlock(index);
         let i = upperLeftBoundOfBlock;
         let end = i + (this.width * this.blockLength);
@@ -124,12 +136,14 @@ export class SudokuImpl implements Sudoku {
         while(i < end) {
             for(let j = 0; j < this.blockWidth; ++j) {
                 if(value === this.field[i+j] && i+j != index) {
-                    throw new Error(`${value} is already set in block`);
+                    return false;
                 }
             }
 
             i += this.width;
         }
+
+        return true;
     }
 
     private calcUpperLeftBoundOfBlock(index: number): number {
@@ -139,7 +153,25 @@ export class SudokuImpl implements Sudoku {
     }
 
     getCurrentlyPossibleNumbers(index: number): number[] {
-        throw new Error("Method not implemented.");
+        this.checkIndex(index);
+
+        let result: number[] = [];
+
+        let i = this.minNumber+1;
+        while(i <= this.maxNumber) {
+            if(this.isValueSettable(index, i)) {
+                result.push(i);
+            }
+            ++i;
+        }
+
+        return result;
+    }
+
+    private isValueSettable(index: number, value: number) : boolean {
+        return  this.isHorizontalLineSettable(index, value) &&
+                this.isVerticalLineSettable(index, value) &&
+                this.isBlockSettable(index, value);
     }
 
     solveAndGetResult(): Sudoku {
